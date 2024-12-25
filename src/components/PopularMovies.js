@@ -8,7 +8,8 @@ import { ApiContext } from "../ApiContext/ApiContext";
 function PopularMovies() {
   // const url ="https://api.themoviedb.org/3/movie/popular?api_key=ad1a48eb03eb6d137b07a109b40de369";
 
-  const { fetchInfo, data } = useContext(ApiContext);
+  const { fetchInfo, data } = useContext(ApiContext); 
+  console.log('object')
 
   useEffect(() => {
     fetchInfo();
