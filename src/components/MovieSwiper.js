@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useState } from "react";
 import {
@@ -8,8 +8,9 @@ import {
   A11y,
   Autoplay,
 } from "swiper/modules";
-
+import { Link } from "react-router-dom";
 import "../swiper.css";
+import { ApiContext } from "../ApiContext/ApiContext";
 
 function MovieSwiper() {
   const [data, setData] = useState([]);
@@ -17,8 +18,7 @@ function MovieSwiper() {
 
   // const url ="https://api.themoviedb.org/3/movie/popular?api_key=ad1a48eb03eb6d137b07a109b40de369";
 
-  const api_url = "https://api.themoviedb.org/3/";
-  const api_key = "ad1a48eb03eb6d137b07a109b40de369";
+  const { api_url, api_key } = useContext(ApiContext);
 
   const fetchInfo = async () => {
     setLoading(true);
@@ -56,11 +56,13 @@ function MovieSwiper() {
       {data.map((movie) => {
         return (
           <SwiperSlide key={movie.id}>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              className="card-img-top"
-              alt={`${movie.title}`}
-            />
+            <Link to={`/movie-details/${movie.id}`}>
+              <img
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                className="card-img-top"
+                alt={`${movie.title}`}
+              />
+            </Link>
             <h4 className="swiper-rating">
               <i className="fas fa-star text-secondary"></i>
               {movie.vote_average} / 10

@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Shows from "./TvShows";
+import { NavLink } from "react-router-dom";
 
 function Header() {
   return (
@@ -12,14 +11,24 @@ function Header() {
         <nav>
           <ul>
             <li>
-              <Link className="nav-link active" to="/">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+                to="/"
+              >
                 Movies
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link className="nav-link" to="/shows">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+                to="/shows"
+              >
                 TV Shows
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </nav>

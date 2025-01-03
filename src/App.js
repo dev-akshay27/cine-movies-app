@@ -5,13 +5,21 @@ import MovieSwiper from "./components/MovieSwiper";
 import SearchBox from "./components/SearchBox";
 import PopularMovies from "./components/PopularMovies";
 import Footer from "./components/Footer";
-import { BrowserRouter, Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Shows from "./components/TvShows";
-import { useLocation } from "react-router-dom";
+import ShowDetails from "./components/ShowDetails";
 import { ApiContextProvider } from "./ApiContext/ApiContext";
+import MovieDetails from "./components/MovieDetails";
+import Search from "./components/Search";
 
 function App() {
   const location = useLocation();
+
+  const hideComponents =
+    location.pathname.startsWith("/movie-details/") ||
+    location.pathname === "/shows" ||
+    location.pathname === "/search" ||
+    location.pathname.startsWith("/shows/show-details/");
 
   return (
     // <div className="App">
@@ -26,10 +34,11 @@ function App() {
     //     <Footer />
     //   </BrowserRouter>
     // </div>
+
     <ApiContextProvider>
       <div className="App">
         <Header />
-        {location.pathname !== "/shows" && (
+        {!hideComponents && (
           <>
             <NowPlaying swiper={<MovieSwiper />} />
             <SearchBox />
@@ -37,6 +46,9 @@ function App() {
         )}
 
         <Routes>
+          <Route path="/search" element={<Search />} />
+          <Route path="/movie-details/:movieID" element={<MovieDetails />} />
+          <Route path="/shows/show-details/:showID" element={<ShowDetails />} />
           <Route path="/" element={<PopularMovies />} />
           <Route exact path="/shows" element={<Shows />} />
         </Routes>

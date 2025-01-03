@@ -1,18 +1,16 @@
 import { useEffect } from "react";
-// import './App.css';
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ApiContext } from "../ApiContext/ApiContext";
+import noImage from "../images/no-image.jpg"
+
 // import { images } from "../components/images";
 
 function PopularMovies() {
-  // const url ="https://api.themoviedb.org/3/movie/popular?api_key=ad1a48eb03eb6d137b07a109b40de369";
-
-  const { fetchInfo, data } = useContext(ApiContext); 
-  console.log('object')
+  const { fetchMovies, data } = useContext(ApiContext);
 
   useEffect(() => {
-    fetchInfo();
+    fetchMovies();
   }, []);
 
   return (
@@ -21,10 +19,9 @@ function PopularMovies() {
 
       <div className="grid">
         {data.map((movie) => {
-          // console.log(movie.title);
           return (
             <div key={movie.id} className="card">
-              <Link to={`movie-details.html?id=${movie.id}`}>
+              <Link to={`/movie-details/${movie.id}`}>
                 {movie.poster_path ? (
                   <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -33,7 +30,7 @@ function PopularMovies() {
                   />
                 ) : (
                   <img
-                    src={` "/images/no-image.jpg"${movie.poster_path}`}
+                  src={noImage}
                     className="card-img-top"
                     alt={`${movie.title}`}
                   />
